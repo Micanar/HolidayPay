@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class HolidayPayService {
+    private static final double AVERAGE_DAYS_IN_MONTH = 29.3;
 
     private final List<MonthDay> holidays = Arrays.asList(
             MonthDay.of(1, 1), // Новый год
@@ -27,9 +28,8 @@ public class HolidayPayService {
             MonthDay.of(11, 4) // День народного единства
     );
 
-    public double getHolidayPay(LocalDate startDate, LocalDate endDate, double salary) {
-        int count = getWorkingDaysCount(startDate, endDate);
-        double dailyPay = salary / 21; // Средний заработок за день
+    public double getHolidayPay(int count, double salary) {
+        double dailyPay = salary / AVERAGE_DAYS_IN_MONTH; // Средний заработок за день
         double result = count * dailyPay;
         return Math.round(result * 100.0) / 100.0; //Округление до 2х знаков после запятой
     }
